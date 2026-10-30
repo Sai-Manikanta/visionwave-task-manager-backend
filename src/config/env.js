@@ -16,4 +16,8 @@ export const env = {
   signupCode: process.env.TEAM_SIGNUP_CODE,
   timezone: process.env.APP_TIMEZONE || 'Asia/Kolkata',
   trustProxy: Number(process.env.TRUST_PROXY) || 0,
+  clientOrigins: (process.env.CLIENT_ORIGIN ?? '')
+    .split(',')
+    .map((origin) => origin.trim().replace(/\/+$/, ''))
+    .filter(Boolean),
 };

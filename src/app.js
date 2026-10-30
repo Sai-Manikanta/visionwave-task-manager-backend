@@ -6,6 +6,7 @@ import express from 'express';
 import helmet from 'helmet';
 import { env } from './config/env.js';
 import { requireAuth } from './middleware/auth.js';
+import { crossOrigin } from './middleware/crossOrigin.js';
 import { errorHandler, notFound } from './middleware/error.js';
 import authRoutes from './routes/auth.js';
 import dashboardRoutes from './routes/dashboard.js';
@@ -18,6 +19,7 @@ export function createApp() {
   const app = express();
   app.set('trust proxy', env.trustProxy);
   app.use(helmet());
+  app.use(crossOrigin);
   app.use(express.json({ limit: '1mb' }));
   app.use(cookieParser());
 

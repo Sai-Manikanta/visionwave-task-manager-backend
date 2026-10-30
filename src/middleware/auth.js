@@ -7,7 +7,9 @@ export const COOKIE_NAME = 'vwt_session';
 const MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 
 export function cookieOptions() {
-  return { httpOnly: true, sameSite: 'lax', secure: env.isProduction, path: '/' };
+  // A client on another site only gets the cookie with SameSite=None, which requires Secure.
+  const crossSite = env.isProduction && env.clientOrigins.length > 0;
+  return { httpOnly: true, sameSite: crossSite ? 'none' : 'lax', secure: env.isProduction, path: '/' };
 }
 
 export function setSession(res, userId) {
